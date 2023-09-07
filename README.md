@@ -3,7 +3,7 @@ tested systems: linux
 
 ### Goal: 
 
-        an open source SIEM/EDR system for home users with multiple devices
+        an open source basic SIEM system for home users with multiple linux devices
 
 ### trajectory
 
@@ -26,8 +26,8 @@ tested systems: linux
         as means for the server to verify the client hasn't been tampered with. The same
         portion of the client directory can be 'compiled'.
 
-- setup server and client via docker with a streamlit dashboard
-- setup telegram alerts
+- setup server and client via docker with a streamlit dashboard (TODO)
+- setup telegram alerts (TODO)
 
 
 ```
@@ -106,6 +106,7 @@ Network traffic (TODO: scapy)
     - dns resolve records
     - http connections
     - transfer volume analysis once enough data is gathered (1 week?)
+    - get actual ssh/ftp/smb logs
 
 client.conf:
 
