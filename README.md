@@ -110,9 +110,9 @@ Network traffic (TODO: scapy)
 
 client.conf:
 
-    - client interaction is needed before first run
+    - user interaction is needed before first run
 
-Client must run at user level
+Client must run at user level?
 
 
 # Dashboard
@@ -138,9 +138,11 @@ Client must run at user level
 - Authentication: 
     client needs to confirm somehow the client file is legit
     perhaps a file checksum could work
-    1. checksum all staticfiles' hashes added up (client)
     - checklist pwd files
     - exclude conf and db and create a hash from the rest
+- Authorization:
+    - client needs to authorized to only perform predefined
+    actions via api calls.
 
 
 # REFERENCES
