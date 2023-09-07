@@ -33,6 +33,8 @@ SERVER_IP = client_config["server_ip"]
 SERVER_PORT = client_config["port"]
 SERVER_URL = f"http://{SERVER_IP}:{SERVER_PORT}"
 CLIENT_NAME = client_config["client_name"]
+CLIENT_PATH = client_config["client_filepath"]
+HASH_ALGO = client_config["hash_algorithm"]
 
 # watchdog handler
 class MyHandler(FileSystemEventHandler):
@@ -141,8 +143,8 @@ def profile_client(status, log_data='None'):
         client_logger.info('Error:', e)
 
 def submit_client_integriry():
-    directory_path = '/home/vini/code/VPeron/SOC/api_siem/client'
-    hash_algorithm = 'sha256'
+    directory_path = CLIENT_PATH
+    hash_algorithm = HASH_ALGO
 
     file_hashes = hash_files_in_directory(directory_path, hash_algorithm)
     client_integrity_url = SERVER_URL + "/check_client_integrity"
@@ -156,8 +158,8 @@ def submit_client_integriry():
 
 # start watchdog and listen for changes on log files
 def watchdog_run():
-    profile_client('listening')
-    client_logger.info('client listening')
+    profile_client('listening: file change')
+    client_logger.info('client listening: file change')
     file_to_watch = "/var/log/auth.log"
     event_handler = MyHandler()
     observer = Observer()

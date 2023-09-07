@@ -15,6 +15,9 @@ SERVER_URL = f"http://{SERVER_IP}:{SERVER_PORT}"
 SERVER_INTERFACE_ENDPOINT = "/get_server_interface"
 
 #init_logger = setup_custom_logger("client_init")
+def get_client_local_path():
+    pass
+    
 
 def get_server_interface():
     server_interface_url = SERVER_URL + SERVER_INTERFACE_ENDPOINT
@@ -42,10 +45,10 @@ def get_internal_ip(interface_name):
         print(f"Error: {e}")
         return None
 
-def start_up_conf_check(file_path):
+def start_up_conf_check(local_conf_file_path):
     # open client configuration file and write client's internal 
     # ip, on the same interface as the server, to the conf file 
-    with open(file_path, 'r') as json_file:
+    with open(local_conf_file_path, 'r') as json_file:
         data = json.load(json_file)
         data["net_interface"] = get_server_interface()["interface"]
         if not data["net_interface"]:
@@ -57,6 +60,6 @@ def start_up_conf_check(file_path):
                 data["host_ip"] = internal_ip
                 data["client_init"] = "true"
 
-    with open(file_path, 'w') as json_file:
+    with open(local_conf_file_path, 'w') as json_file:
         json.dump(data, json_file, indent=4)
         #init_logger.info(f"Client: {internal_ip} config updated with server interface")

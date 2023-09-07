@@ -1,7 +1,15 @@
 import hashlib
 import os
+import json
 
-def calculate_file_hash(file_path, hash_algorithm="sha256"):
+with open("client_conf.json", "r") as conf_obj:
+    data = json.load(conf_obj)
+
+CLIENT_PATH = data["client_filepath"]
+HASH_ALGO = data["hash_algorithm"]
+
+
+def calculate_file_hash(file_path, hash_algorithm=HASH_ALGO):
     try:
         hasher = hashlib.new(hash_algorithm)
         with open(file_path, 'rb') as f:
@@ -22,7 +30,7 @@ def should_ignore_file_or_directory(name):
             return True
     return False
 
-def hash_files_in_directory(directory_path, hash_algorithm="sha256"):
+def hash_files_in_directory(directory_path, hash_algorithm=HASH_ALGO):
     file_hashes = {}
     
     try:
@@ -41,11 +49,7 @@ def hash_files_in_directory(directory_path, hash_algorithm="sha256"):
     return file_hashes
 
 if __name__ == "__main__":
-
-    directory_path = '/home/vini/code/VPeron/SOC/api_siem/client'
-    hash_algorithm = 'sha256'
-
-    file_hashes = hash_files_in_directory(directory_path, hash_algorithm)
+    file_hashes = hash_files_in_directory(CLIENT_PATH, HASH_ALGO)
 
     if file_hashes:
         for filename, file_hash in file_hashes.items():

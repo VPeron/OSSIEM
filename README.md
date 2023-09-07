@@ -125,8 +125,8 @@ Client must run at user level?
 
 # Configuration
 
-    A json file is provided for each server and client side individually
-    in their respective directories.
+    A json file is needed for each server and client side individually
+    in their respective directories. 
 server_conf.json (template)
 
 ```
@@ -151,8 +151,6 @@ client_conf.json
     "host_ip": ""
 }
 ```
-
-client_conf.json
 
 
 ## TODO
