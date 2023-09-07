@@ -41,6 +41,7 @@ else:
     print("No files found in the directory.")
 
 
+# needs to move to a separate file
 current_client = """
 siem_client.py: b69c2e4cfe444572568e89f7d8cdaf86677e730e5e7d4e378595c18238c58d00
 client.py: 3fe7fd34b637b9ce2799b5549ba9a5efda8a98a19670aa2edf5d2a22d000e443

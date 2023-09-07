@@ -134,7 +134,7 @@ def check_client_integrity():
     client_integrity_checker = data.get('utils/client_integritiy.py')
     client_sys_monitor = data.get('utils/system_monitor.py')
 
-    # expected imaging of client static files
+    # expected imaging of client static files (needs to move to a separate fiel)
     current_print = {
        "client.py": "712089d79e584b6551f922f4a3b6b04ea5d449876627443ef59cf19a0ee9b5df",
         "custom_logger.py": "1279862e5dbafd189cf8cb373206d0aff4ee7c7d0c6904cbf7683bb9f9bb9508",

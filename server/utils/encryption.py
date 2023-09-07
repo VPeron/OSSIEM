@@ -40,14 +40,3 @@ def decrypt_data(encrypted_data: bytes, master_key: bytes, salt_token: bytes):
     cipher = Fernet(encryption_key)
     decrypted_data = cipher.decrypt(encrypted_data)
     return decrypted_data.decode()
-
-if __name__ == "__main__":
-    secret_string = "hello world"
-    
-    encrypted_secret = encrypt_data(secret_string.encode(), b'bad_pass', b'bad salt')
-    
-    print(encrypted_secret)
-    
-    decrypted_secret = decrypt_data(encrypted_secret, b'bad_pass', b'bad salt')
-    
-    print(decrypted_secret)

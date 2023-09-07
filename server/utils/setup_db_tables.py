@@ -8,7 +8,7 @@ with open('server_conf.json', 'r') as config_file:
 
 DB_NAME = server_config["db_name"]
 
-# this block will eventually live somewhere else with init
+
 def create_tables():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
