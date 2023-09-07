@@ -1,4 +1,4 @@
-# API based OSSIEM
+# API based SIEM
 tested systems: linux
 
 ### Goal: 
@@ -127,6 +127,32 @@ Client must run at user level?
 
     A json file is provided for each server and client side individually
     in their respective directories.
+server_conf.json (template)
+
+```
+{
+    "host" : "0.0.0.0",
+    "port" : 5000,
+    "db_name" : "siem_database.db",
+    "net_interface" : "",
+    "host_ip" : "",
+    "hash_algorithm": "sha256"
+}
+```
+client_conf.json
+
+```
+{
+    "client_init": "false",
+    "server_ip": "",
+    "port": 5000,
+    "client_name": "",
+    "net_interface": "",
+    "host_ip": ""
+}
+```
+
+client_conf.json
 
 
 ## TODO
@@ -143,6 +169,9 @@ Client must run at user level?
 - Authorization:
     - client needs to authorized to only perform predefined
     actions via api calls.
+
+- Dependencies:
+    split server/client dependencies
 
 
 # REFERENCES
