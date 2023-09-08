@@ -136,10 +136,17 @@ server_conf.json (template)
     "db_name" : "siem_database.db",
     "net_interface" : "",
     "host_ip" : "",
-    "hash_algorithm": "sha256"
+    "hash_algorithm": "sha256",
+    "client_checksums": {
+        "client": "",
+        "logger": "",
+        "client_init": "",
+        "system_monitor": "",
+        "client_integritiy": ""
+    }
 }
 ```
-client_conf.json
+client_conf.json (template)
 
 ```
 {
@@ -148,10 +155,13 @@ client_conf.json
     "port": 5000,
     "client_name": "",
     "net_interface": "",
-    "host_ip": ""
+    "host_ip": "",
+    "client_filepath": "",
+    "hash_algorithm": "sha256"
 }
 ```
-
+The client_init loads the interface, host_ip and hash algorithm from the server directly on first run.
+name and server_ip need user interaction or server preconfig on distribution.
 
 ## TODO
 

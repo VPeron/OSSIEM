@@ -39,6 +39,7 @@ HASH_ALGO = client_config["hash_algorithm"]
 # watchdog handler
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
+        # triggers client workflow
         run_client()
         client_logger.info(f'File modified: {event.src_path}')
         
@@ -148,20 +149,25 @@ def submit_client_integriry():
     client_integrity_url = SERVER_URL + "/check_client_integrity"
     try:
         response = requests.post(client_integrity_url, json=file_hashes)
-        if response.status_code != 200:
+        if response.status_code == 200:
+            result = response.json()
+            if result['verified']:
+                return True
+            return False
+        else:
             client_logger.info(f'client integrity submit error | statuscode: {response.status_code}')
+            return False
     except requests.exceptions.RequestException as e:
         client_logger.info('Error:', e)
     
 
 # start watchdog and listen for changes on log files
-def watchdog_run():
+def watchdog_run(monitor_filepath):
     profile_client('listening', 'file change')
     client_logger.info('client listening: file change')
-    file_to_watch = "/var/log/auth.log"
     event_handler = MyHandler()
     observer = Observer()
-    observer.schedule(event_handler, path=file_to_watch, recursive=True)
+    observer.schedule(event_handler, path=monitor_filepath, recursive=True)
     observer.start()
 
     try:
@@ -187,8 +193,11 @@ def run_client():
 
 if __name__ == '__main__':
     client_logger.info("Starting client")
-    submit_client_integriry()
+    int_response = submit_client_integriry()
     get_system_stats()
     run_client()
     # start listener
-    watchdog_run()
+    watchdog_run("/var/log/auth.log")
+    #watchdog_run(".")
+
+        
