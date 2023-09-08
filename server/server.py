@@ -95,9 +95,9 @@ def submit_memory_usage():
             print("Duplicate entry, skipping insertion.")
         conn.commit()
         conn.close()
-        return jsonify({"message": "SysLog submitted successfully"}), 200
+        return jsonify({"message": "log submitted successfully"}), 200
     else:
-        return jsonify({"error": "SysLog data required"}), 400
+        return jsonify({"error": "log data required"}), 400
 
 
 @app.route("/view_memory_usage", methods=["GET"])
@@ -151,19 +151,19 @@ def check_client_integrity():
     }
     
     #logger
-    if client_logger_file == CLIENT_CHECKSUMS["custom_logger.py"]:
+    if client_logger_file == CLIENT_CHECKSUMS["logger"]:
         checksum_list["customer_logger.py"] = True
     #main
-    if client_main == CLIENT_CHECKSUMS["client.py"]:
+    if client_main == CLIENT_CHECKSUMS["client"]:
         checksum_list["client.py"] = True
     #main
-    if client_initializer == CLIENT_CHECKSUMS["client_init.py"]:
+    if client_initializer == CLIENT_CHECKSUMS["client_init"]:
         checksum_list["client_init.py"] = True
     #sysmonitor
-    if client_sys_monitor == CLIENT_CHECKSUMS["utils/system_monitor.py"]:
+    if client_sys_monitor == CLIENT_CHECKSUMS["system_monitor"]:
         checksum_list["utils/system_monitor.py"] = True
     #integrity check
-    if client_integrity_checker == CLIENT_CHECKSUMS["utils/client_integritiy.py"]:
+    if client_integrity_checker == CLIENT_CHECKSUMS["client_integritiy"]:
         checksum_list["utils/client_integritiy.py"] = True
     
     print(checksum_list)

@@ -119,9 +119,7 @@ def collect_and_send_memory_usage():
     submit_memory_usage_url = SERVER_URL + "/submit_memory_usage"
     try:
         response = requests.post(submit_memory_usage_url, json=data)
-        if response.status_code == 200:
-            client_logger.info(f'Memory Usage submitted successfully')
-        else:
+        if response.status_code != 200:
             client_logger.info(f'Client failed to submit Memory Usage log', response.status_code)
     except requests.exceptions.RequestException as e:
         client_logger.info('Error:', e)
@@ -158,7 +156,7 @@ def submit_client_integriry():
 
 # start watchdog and listen for changes on log files
 def watchdog_run():
-    profile_client('listening: file change')
+    profile_client('listening', 'file change')
     client_logger.info('client listening: file change')
     file_to_watch = "/var/log/auth.log"
     event_handler = MyHandler()
@@ -180,7 +178,7 @@ def run_client():
     print("\nrunning client workflow\n")
     client_logger.info("Client run")
     
-    profile_client('running')
+    profile_client('running', 'workflow')
     collect_and_send_memory_usage()
     collect_system_logs()
     filter_logs()

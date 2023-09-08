@@ -171,6 +171,9 @@ client_conf.json
 - Dependencies:
     split server/client dependencies
 
+- Tests
+    unittest should be ok for now
+
 
 # REFERENCES
 
