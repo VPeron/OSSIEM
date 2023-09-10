@@ -35,13 +35,6 @@ NOTE: Docker may screw subprocess system calls, specially on client side
 .
 ├── README.md
 ├── requirements.txt
-├── feat_dev
-│   ├── get_local_conf.py
-│   ├── logs_watchdog.py
-│   ├── re_log_search.py
-│   ├── setup_tables.py
-│   ├── siem_client.py
-│   └── sniffer.py
 ├── client
 │   ├── client_conf.json
 │   ├── client_init.py

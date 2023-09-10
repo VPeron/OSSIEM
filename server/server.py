@@ -186,19 +186,19 @@ def check_client_integrity():
     }
     
     #logger
-    if client_logger_file == CLIENT_CHECKSUMS["logger"]:
+    if client_logger_file == CLIENT_CHECKSUMS["custom_logger.py"]:
         checksum_list["customer_logger.py"] = True
     #main
-    if client_main == CLIENT_CHECKSUMS["client"]:
+    if client_main == CLIENT_CHECKSUMS["client.py"]:
         checksum_list["client.py"] = True
     #main
-    if client_initializer == CLIENT_CHECKSUMS["client_init"]:
+    if client_initializer == CLIENT_CHECKSUMS["client_init.py"]:
         checksum_list["client_init.py"] = True
     #sysmonitor
-    if client_sys_monitor == CLIENT_CHECKSUMS["system_monitor"]:
+    if client_sys_monitor == CLIENT_CHECKSUMS["utils/system_monitor.py"]:
         checksum_list["utils/system_monitor.py"] = True
     #integrity check
-    if client_integrity_checker == CLIENT_CHECKSUMS["client_integritiy"]:
+    if client_integrity_checker == CLIENT_CHECKSUMS["utils/client_integritiy.py"]:
         checksum_list["utils/client_integritiy.py"] = True
     
     print(checksum_list)
