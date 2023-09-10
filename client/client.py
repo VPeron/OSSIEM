@@ -1,10 +1,10 @@
-import psutil
-import requests
 import platform
 import subprocess
 import json
 import re
 
+import psutil
+import requests
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -35,6 +35,7 @@ SERVER_URL = f"http://{SERVER_IP}:{SERVER_PORT}"
 CLIENT_NAME = client_config["client_name"]
 CLIENT_PATH = client_config["client_filepath"]
 HASH_ALGO = client_config["hash_algorithm"]
+HOST_IP = client_config['host_ip']
 
 # watchdog handler
 class MyHandler(FileSystemEventHandler):
@@ -159,6 +160,37 @@ def submit_client_integriry():
             return False
     except requests.exceptions.RequestException as e:
         client_logger.info('Error:', e)
+        
+def submit_client_processes(process_status='running'):
+    # Get a list of all running processes
+    running_processes = []
+    for process in psutil.process_iter(attrs=['pid', 'name', 'status']):
+        
+        process_info = process.info
+        if process_info["status"] == "running":
+            running_processes.append(process_info)
+    
+    proc_url = SERVER_URL + "/client_processes"
+    procs_logged = 0
+    
+    for process in running_processes:
+        proc_data = {
+            "client_ip": HOST_IP,
+            "PID": process["pid"],
+            "process_name": process["name"],
+            "process_status": process["status"],
+        }
+        try:
+            response = requests.post(proc_url, json=proc_data)
+            if response.status_code == 200:
+                procs_logged += 1
+            else:
+                client_logger.info(f'client integrity submit error | statuscode: {response.status_code}')
+        
+        except requests.exceptions.RequestException as e:
+            client_logger.info('Error:', e)
+    return {"processes logged": procs_logged}
+
     
 
 # start watchdog and listen for changes on log files
@@ -185,6 +217,7 @@ def run_client():
     client_logger.info("Client run")
     
     profile_client('running', 'workflow')
+    submit_client_processes('running')
     collect_and_send_memory_usage()
     collect_system_logs()
     filter_logs()

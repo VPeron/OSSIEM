@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SIEM Processes</title>
+</head>
+<body>
+    <h1>SIEM Processes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client IP</th>
+                <th>PID</th>
+                <th>name</th>
+                <th>status</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proc in procs %}
+            <tr>
+                <td>{{ proc[0] }}</td>
+                <td>{{ proc[1] }}</td>
+                <td>{{ proc[2] }}</td>
+                <td>{{ proc[3] }}</td>
+                <td>{{ proc[4] }}</td>
+                <td>{{ proc[5] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

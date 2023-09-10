@@ -130,6 +130,41 @@ def client_reports():
     else:
         return jsonify({"error": "client report error"}), 400
     
+# client processes
+@app.route("/client_processes", methods=["POST"])
+def client_processes():
+    """client processes"""
+    data = request.get_json()
+    # columns
+    
+    client_ip = data.get("client_ip")
+    pid = data.get("PID")
+    name = data.get("process_name")
+    status = data.get("process_status")
+
+    if client_ip and name and status:
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO processes (client_ip, PID, process_name, process_status) VALUES (?, ?, ?, ?)", (client_ip, pid, name, status))
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "processes submitted successfully"}), 200
+    else:
+        return jsonify({"error": "client process submit error"}), 400
+
+
+@app.route("/view_client_processes", methods=["GET"])
+def view_client_processes():
+    """serves database processes table to the endpoint"""
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM processes ORDER BY id DESC")
+    procs = cursor.fetchall()
+    conn.close()
+    return render_template("client_processes.html", procs=procs)
+
+
+    
 # client checksum
 @app.route("/check_client_integrity", methods=["POST"])
 def check_client_integrity():

@@ -23,6 +23,18 @@ def create_tables():
             UNIQUE (client_name, log_type, log_data)
         )
     ''')
+    #conn.commit()
+    # processes
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS processes (
+            id INTEGER PRIMARY KEY,
+            client_ip TEXT,
+            PID TEXT,
+            process_name TEXT,
+            process_status TEXT,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
     conn.commit()
     # Memory Usage
     cursor.execute('''
@@ -37,7 +49,7 @@ def create_tables():
             timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-    conn.commit()
+    #conn.commit()
     # client_reports
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS client (

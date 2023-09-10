@@ -8,6 +8,7 @@ tested systems: linux
 ### trajectory
 
 **Stack**: Python >= 3.8, *docker*(eng), streamlit(dashboard), telegrambot (alerts)
+NOTE: Docker may screw subprocess system calls, specially on client side
 
 - define system confinements
 
@@ -27,7 +28,7 @@ tested systems: linux
         portion of the client directory can be 'compiled'.
 
 - setup server and client via docker with a streamlit dashboard (TODO)
-- setup telegram alerts (TODO)
+- setup alerts (TODO)
 
 
 ```
