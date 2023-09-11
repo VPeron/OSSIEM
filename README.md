@@ -1,5 +1,5 @@
 # API based SIEM
-tested systems: linux
+
 
 ### Goal: 
 
@@ -7,7 +7,7 @@ tested systems: linux
 
 ### trajectory
 
-**Stack**: Python >= 3.8, *docker*(eng), streamlit(dashboard), telegrambot (alerts)
+**Stack**: Python >= 3.8, docker*(eng), streamlit(dashboard), telegrambot (alerts)
 NOTE: Docker may screw subprocess system calls, specially on client side
 
 - define system confinements
@@ -181,57 +181,4 @@ name and server_ip need user interaction or server preconfig on distribution.
 
 # REFERENCES
 
-a non-exhaustive list of possible IOCs to consider implementing:
-
-    Unusual Login Activity:
-        Multiple failed login attempts.
-        Successful logins from unusual locations or at unusual times.
-        Repeated login failures for the same account.
-
-    Anomalous File Access:
-        Unexpected access to sensitive files or directories.
-        Changes to critical system files.
-        Unusual file permission changes.
-
-    Malware Signatures:
-        Detecting known malware signatures in file hashes or patterns.
-        Anomalous process behavior that may indicate the presence of malware.
-
-    Network Traffic Anomalies:
-        Unusual network connections, such as connections to known malicious IP addresses or domains.
-        Large data transfers to/from unexpected locations.
-        Port scans or network reconnaissance.
-
-    Unauthorized Access or Privilege Escalation:
-        Detection of unauthorized access to sensitive systems or data.
-        Unusual privilege escalation activities.
-
-    Suspicious Processes and System Calls:
-        Monitoring for processes or system calls associated with known attacks or exploits.
-        Detecting shellcode execution or suspicious API calls.
-
-    Abnormal Resource Usage:
-        Unusual spikes in CPU, memory, or disk usage.
-        Processes that consume more resources than usual.
-
-    Registry or Configuration Changes:
-        Unauthorized changes to system registries or configuration files.
-        Changes to startup scripts or cron jobs.
-
-    Web Server and Application Logs:
-        Analyzing web server logs for signs of SQL injection, XSS attacks, or other web-based attacks.
-        Monitoring for unusual or excessive web traffic patterns.
-
-    Email and Messaging Logs:
-        Detecting phishing attempts or suspicious email attachments.
-        Monitoring for email traffic to known malicious domains.
-
-    DNS Queries and Resolutions:
-        Detecting unusual DNS queries or responses.
-        Monitoring for DNS requests to malicious domains.
-
-    Authentication and Authorization Logs:
-        Unusual access requests or changes to user roles and permissions.
-
-    Endpoint Security Alerts:
-        Alerts from antivirus, intrusion detection systems (IDS), or endpoint protection solutions.
+tested systems: Ubuntu 22.04.2

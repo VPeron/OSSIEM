@@ -227,10 +227,11 @@ def run_client():
 if __name__ == '__main__':
     client_logger.info("Starting client")
     int_response = submit_client_integriry()
-    get_system_stats()
-    run_client()
-    # start listener
-    watchdog_run("/var/log/auth.log")
-    #watchdog_run(".")
+    if int_response['verified']:
+        get_system_stats()
+        run_client()
+        # start listener
+        watchdog_run("/var/log/auth.log")
+        #watchdog_run(".")
 
         
