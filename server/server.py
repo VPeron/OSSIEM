@@ -33,6 +33,7 @@ def get_server_configuration():
     else:
         return jsonify({"error": "server not fully configured"}), 400
 
+
 # LOGS
 @app.route("/submit_log", methods=["POST"])
 def submit_log():
@@ -110,6 +111,7 @@ def view_memory_usage():
     conn.close()
     return render_template("memory_usage.html", mem_use=mem_use)
 
+
 # client reports
 @app.route("/client_reports", methods=["POST"])
 def client_reports():
@@ -129,14 +131,13 @@ def client_reports():
         return jsonify({"message": "report log submitted successfully"}), 200
     else:
         return jsonify({"error": "client report error"}), 400
-    
+
+
 # client processes
 @app.route("/client_processes", methods=["POST"])
 def client_processes():
     """client processes"""
     data = request.get_json()
-    # columns
-    
     client_ip = data.get("client_ip")
     pid = data.get("PID")
     name = data.get("process_name")
@@ -164,42 +165,15 @@ def view_client_processes():
     return render_template("client_processes.html", procs=procs)
 
 
-    
 # client checksum
 @app.route("/check_client_integrity", methods=["POST"])
 def check_client_integrity():
     """check_client_integrity"""
     data = request.get_json()
-    # columns
-    client_logger_file = data.get("custom_logger.py")
-    client_main = data.get("client.py")
-    client_initializer = data.get("client_init.py")
-    client_integrity_checker = data.get("utils/client_integritiy.py")
-    client_sys_monitor = data.get("utils/system_monitor.py")
-        
-    checksum_list = {
-        "client.py": False,
-        "customer_logger.py": False,
-        "client_init.py": False,
-        "utils/system_monitor.py": False,
-        "utils/client_integritiy.py": False,       
-    }
     
-    #logger
-    if client_logger_file == CLIENT_CHECKSUMS["custom_logger.py"]:
-        checksum_list["customer_logger.py"] = True
-    #main
-    if client_main == CLIENT_CHECKSUMS["client.py"]:
-        checksum_list["client.py"] = True
-    #main
-    if client_initializer == CLIENT_CHECKSUMS["client_init.py"]:
-        checksum_list["client_init.py"] = True
-    #sysmonitor
-    if client_sys_monitor == CLIENT_CHECKSUMS["utils/system_monitor.py"]:
-        checksum_list["utils/system_monitor.py"] = True
-    #integrity check
-    if client_integrity_checker == CLIENT_CHECKSUMS["utils/client_integritiy.py"]:
-        checksum_list["utils/client_integritiy.py"] = True
+    # collect original checksums from config file and compare with client submission
+    checksum_list = {filename: data.get(filename) == CLIENT_CHECKSUMS.get(filename, None)
+                    for filename in CLIENT_CHECKSUMS.keys()}
     
     print(checksum_list)
     if all(checksum_list.values()):

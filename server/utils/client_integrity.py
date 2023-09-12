@@ -10,6 +10,8 @@ CLIENT_PATH = "../client"
 CHECKSUMS = data['client_checksums']
 
 def calculate_file_hash(file_path, hash_algorithm=HASH_ALGO):
+    """Calculate the hash for the file argument given the hash algorithm.
+    return the hash's hex format"""
     try:
         hasher = hashlib.new(hash_algorithm)
         with open(file_path, 'rb') as f:
@@ -23,7 +25,7 @@ def calculate_file_hash(file_path, hash_algorithm=HASH_ALGO):
         return f"Error hashing {file_path}: {str(e)}"
 
 def should_ignore_file_or_directory(name):
-    # Define patterns for directories or files to ignore
+    """ Define patterns for directories or files to ignore"""
     ignore_patterns = ["__pycache__", "client_conf.json", "client_init.log", "main_client.log"]
     for pattern in ignore_patterns:
         if pattern in name:
@@ -31,6 +33,9 @@ def should_ignore_file_or_directory(name):
     return False
 
 def hash_files_in_directory(directory_path, hash_algorithm=HASH_ALGO):
+    """iterate through directory provided as argument recursively and 
+    hash each file found. ignore irrelevant or dynamic files.
+    return a dictionary with file, hash as key, value respective."""
     file_hashes = {}
     
     try:
@@ -49,6 +54,7 @@ def hash_files_in_directory(directory_path, hash_algorithm=HASH_ALGO):
     return file_hashes
 
 def update_client_conf_checksum(checksums):
+    """update server configuration file with updated file hashes"""
     with open('server_conf.json', 'w') as conf_obj:
         data["client_checksums"] = checksums
         json.dump(data, conf_obj, indent=4)

@@ -226,12 +226,14 @@ def run_client():
 
 if __name__ == '__main__':
     client_logger.info("Starting client")
-    int_response = submit_client_integriry()
-    if int_response['verified']:
+    integrity_response = submit_client_integriry()
+    if integrity_response:
         get_system_stats()
         run_client()
         # start listener
         watchdog_run("/var/log/auth.log")
         #watchdog_run(".")
+    else:
+        print('checksum verification failed')
 
         
