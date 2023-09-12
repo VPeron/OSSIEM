@@ -5,7 +5,7 @@ import requests
 import subprocess
 from pathlib import Path
 
-from custom_logger import setup_custom_logger
+#from custom_logger import setup_custom_logger
 
 with open('client_conf.json', 'r') as config_file:
     client_config = json.load(config_file)

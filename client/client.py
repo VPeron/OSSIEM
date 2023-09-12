@@ -18,7 +18,7 @@ client_logger = setup_custom_logger("main_client")
 
 
 client_config_file = "client_conf.json"
-# load configuration file and checks if it's complete
+# load configuration file and check if it's complete
 with open(client_config_file, 'r') as config_file:
     client_config = json.load(config_file)
     
@@ -47,7 +47,7 @@ class MyHandler(FileSystemEventHandler):
 
 def collect_and_send_log(log_type, log_data):
     data = {
-        'client_name': CLIENT_NAME,
+        'client_name': HOST_IP,
         'log_type': log_type,
         'log_data': log_data
     }
@@ -60,7 +60,7 @@ def collect_and_send_log(log_type, log_data):
         client_logger.info('Error:', e)
 
 def collect_system_logs():
-    # Collect system-specific logs (boot up, shutdown, etc.)
+    # Collect system-specific logs
     system = platform.system()
     if system == 'Linux':
         boot_time = subprocess.check_output(['uptime', '-s']).decode().strip()
@@ -85,9 +85,9 @@ def search_log(log_path, search_pattern):
         return False
 
 def filter_logs():
-    command_search = ['sudo', r"authentication failure", 'ssh']
+    keyword_search = ['sudo', r"authentication failure", 'ssh']
     try:
-        for tag in command_search:
+        for tag in keyword_search:
             results = search_log("/var/log/auth.log", tag)
             if results:
                 for result in results:
@@ -108,10 +108,11 @@ def get_memory_usage():
         "percent": virtual_memory.percent
     }
 
+
 def collect_and_send_memory_usage():
     memory_usage = get_memory_usage()
     data = {
-        'client_name': CLIENT_NAME,
+        'client_name': HOST_IP,
         "total": round(int(memory_usage["total"]), 2),
         "available": round(int(memory_usage["available"]), 2),
         "used": round(int(memory_usage["used"]), 2),
@@ -130,7 +131,7 @@ def collect_and_send_memory_usage():
 def profile_client(status, log_data='None'):
     # update client action to server
     client_report = {
-        "client_ip": CLIENT_NAME, #client_config["host_ip"],
+        "client_ip": HOST_IP,
         "status": status,
         'log_data': log_data
         }
@@ -141,6 +142,7 @@ def profile_client(status, log_data='None'):
             client_logger.info(f'Client submit error | statuscode: {response.status_code}')
     except requests.exceptions.RequestException as e:
         client_logger.info('Error:', e)
+
 
 def submit_client_integriry():
     directory_path = CLIENT_PATH
@@ -160,8 +162,9 @@ def submit_client_integriry():
             return False
     except requests.exceptions.RequestException as e:
         client_logger.info('Error:', e)
-        
-def submit_client_processes(process_status='running'):
+
+
+def submit_client_processes():
     # Get a list of all running processes
     running_processes = []
     for process in psutil.process_iter(attrs=['pid', 'name', 'status']):
@@ -217,7 +220,7 @@ def run_client():
     client_logger.info("Client run")
     
     profile_client('running', 'workflow')
-    submit_client_processes('running')
+    submit_client_processes()
     collect_and_send_memory_usage()
     collect_system_logs()
     filter_logs()
