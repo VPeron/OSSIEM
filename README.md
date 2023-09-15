@@ -1,4 +1,4 @@
-# API based SIEM
+# OS SIEM
 
 
 ### Goal: 
