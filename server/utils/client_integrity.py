@@ -35,7 +35,7 @@ def should_ignore_file_or_directory(name):
 def hash_files_in_directory(directory_path, hash_algorithm=HASH_ALGO):
     """iterate through directory provided as argument recursively and 
     hash each file found. ignore irrelevant or dynamic files.
-    return a dictionary with file, hash as key, value respective."""
+    return a dictionary with file: hash, as, key, value respectively."""
     file_hashes = {}
     
     try:

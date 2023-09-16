@@ -32,7 +32,6 @@ with open(client_config_file, 'r') as config_file:
 SERVER_IP = client_config["server_ip"]
 SERVER_PORT = client_config["port"]
 SERVER_URL = f"http://{SERVER_IP}:{SERVER_PORT}"
-CLIENT_NAME = client_config["client_name"]
 CLIENT_PATH = client_config["client_filepath"]
 HASH_ALGO = client_config["hash_algorithm"]
 HOST_IP = client_config['host_ip']
@@ -154,6 +153,7 @@ def submit_client_integriry():
         response = requests.post(client_integrity_url, json=file_hashes)
         if response.status_code == 200:
             result = response.json()
+            client_logger.info(f"integrity: {result}")
             if result['verified']:
                 return True
             return False

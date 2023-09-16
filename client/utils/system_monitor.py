@@ -1,5 +1,9 @@
 import psutil
 
+from utils.custom_logger import setup_custom_logger
+
+sys_logger = setup_custom_logger('main_client')
+
 def get_cpu_usage():
     return psutil.cpu_percent(interval=1, percpu=True)
 
@@ -31,27 +35,27 @@ def get_system_stats():
     memory_usage = get_memory_usage()
     disk_usage = get_disk_usage()
 
-    print("CPU Usage:")
+    sys_logger.info("CPU Usage:")
     for i, core in enumerate(cpu_usage):
-        print(f"Core {i + 1}: {core}%")
+        sys_logger.info(f"Core {i + 1}: {core}%")
 
-    print("\nMemory Usage:")
-    print(f"Total: {memory_usage['total'] / (1024 ** 3):.2f} GB")
-    print(f"Available: {memory_usage['available'] / (1024 ** 3):.2f} GB")
-    print(f"Used: {memory_usage['used'] / (1024 ** 3):.2f} GB")
-    print(f"Free: {memory_usage['free'] / (1024 ** 3):.2f} GB")
-    print(f"Usage Percentage: {memory_usage['percent']}%")
+    sys_logger.info("Memory Usage:")
+    sys_logger.info(f"Total: {memory_usage['total'] / (1024 ** 3):.2f} GB")
+    sys_logger.info(f"Available: {memory_usage['available'] / (1024 ** 3):.2f} GB")
+    sys_logger.info(f"Used: {memory_usage['used'] / (1024 ** 3):.2f} GB")
+    sys_logger.info(f"Free: {memory_usage['free'] / (1024 ** 3):.2f} GB")
+    sys_logger.info(f"Usage Percentage: {memory_usage['percent']}%")
 
-    print("\nDisk Usage:")
+    sys_logger.info("Disk Usage:")
     for device, info in disk_usage.items():
         if "/dev/loop" in device:
             continue
-        print(f"Device: {device}")
-        print(f"Total: {info['total'] / (1024 ** 3):.2f} GB")
-        print(f"Used: {info['used'] / (1024 ** 3):.2f} GB")
-        print(f"Free: {info['free'] / (1024 ** 3):.2f} GB")
-        print(f"Usage Percentage: {info['percent']}%")
-        print()
+        sys_logger.info(f"Device: {device}")
+        sys_logger.info(f"Total: {info['total'] / (1024 ** 3):.2f} GB")
+        sys_logger.info(f"Used: {info['used'] / (1024 ** 3):.2f} GB")
+        sys_logger.info(f"Free: {info['free'] / (1024 ** 3):.2f} GB")
+        sys_logger.info(f"Usage Percentage: {info['percent']}%")
+        sys_logger.info("")
 
 if __name__ == "__main__":
     get_system_stats()

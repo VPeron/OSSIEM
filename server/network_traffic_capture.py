@@ -9,7 +9,7 @@ class CustomSniffer:
         self.interface = interface
         self.filter = filter
         self.max_packets = max_packets
-        self.db_connection = sqlite3.connect('logs/siem_database.db')
+        self.db_connection = sqlite3.connect('siem_database.db')
         self.db_cursor = self.db_connection.cursor()
         # check if db file exists first
         self.db_cursor.execute('''
@@ -39,7 +39,6 @@ class CustomSniffer:
         #print(packet.summary())
         scapy.wrpcap('logs/captured_traffic.pcap', packet, append=True)
 
-        
         # if self.max_packets and len(self.db_cursor.execute("SELECT id FROM packets").fetchall()) >= self.max_packets:
             # Stop sniffing after capturing a specified number of packets
             # raise KeyboardInterrupt

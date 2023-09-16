@@ -17,11 +17,12 @@ SERVER_URL = f"http://{SERVER_IP}:{SERVER_PORT}"
 SERVER_CONFIGURATION_ENDPOINT = "/get_server_configuration"
 
 #init_logger = setup_custom_logger("client_init")
+
 def get_client_local_path():
     try:
         get_client_local_path = subprocess.check_output(["pwd"], shell=True).decode("utf-8")
         if Path(get_client_local_path):
-            return get_client_local_path
+            return get_client_local_path.strip()
     except subprocess.CalledProcessError as e:
         client_path_search_error = "Error retrieving client path: " + str(e)
         return client_path_search_error
