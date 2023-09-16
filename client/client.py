@@ -9,7 +9,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 from client_init import start_up_conf_check
-from custom_logger import setup_custom_logger
+from utils.custom_logger import setup_custom_logger
 from utils.system_monitor import get_system_stats
 from utils.client_integritiy import hash_files_in_directory
 
@@ -23,7 +23,7 @@ with open(client_config_file, 'r') as config_file:
     client_config = json.load(config_file)
     
     if client_config["client_init"] == "false":
-        client_logger.info(f"Client configuration")
+        client_logger.info("client configuration")
         print('configuring client')
         config_file.close()
         start_up_conf_check(client_config_file)
@@ -210,8 +210,8 @@ def watchdog_run(monitor_filepath):
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
-    profile_client('idle')
-    client_logger.info('client is idle')
+    profile_client(f'{monitor_filepath} observer is idle')
+    client_logger.info(f'{monitor_filepath} observer is idle')
 
 
 def run_client():
