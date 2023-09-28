@@ -7,6 +7,7 @@ with open('server_conf.json', 'r') as conf_file:
     conf_data = json.load(conf_file)
 
 DBNAME = conf_data["db_name"]
+INTERFACE = conf_data["net_interface"]
 TRAFFIC_LOGS = 'logs/captured_traffic.pcap'
 
 class CustomSniffer:
@@ -49,7 +50,7 @@ def traffic_sniffer():
         "dns": "udp port 53",
     }
     max_packets = 1000
-    session = CustomSniffer("wlp0s20f3", filters["all"])
+    session = CustomSniffer(INTERFACE, filters["all"])
     session.start_sniffer()
     session.close()
 
