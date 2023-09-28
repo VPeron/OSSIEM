@@ -1,6 +1,7 @@
 import sqlite3
 import json
 import os
+import subprocess
 from threading import Thread
 
 from flask import Flask, request, jsonify, render_template
@@ -182,9 +183,8 @@ def check_client_integrity():
     return {"verified": False}
 
 def setup_sniffer():
-    import subprocess
     try:
-        # Run the script with sudo privileges
+        # Run the script with sudo privileges in a separate thread
         subprocess.run(["sudo python3 network_traffic_capture.py"], shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error running script with sudo: {e}")

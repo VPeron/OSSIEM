@@ -4,3 +4,5 @@ cryptography==35.0.0
 Flask==2.3.3
 requests==2.31.0
 psutil==5.9.5
+
+Flask-HTTPAuth==4.8.0

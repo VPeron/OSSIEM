@@ -1,4 +1,5 @@
 feat_dev/
+logs/
 __pycache__
 *.db
 *.log
